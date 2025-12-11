@@ -31,7 +31,7 @@
 
     ::selection { background: var(--gold); color: var(--black); }
 
-    /* 숨겨진 힌트 */
+  
     .hidden-hint {
       position: fixed;
       top: 10px;
@@ -46,7 +46,7 @@
       line-height: 1.3;
     }
 
-    /* 헤더 */
+    
     header {
       position: fixed;
       top: 0;
@@ -299,7 +299,7 @@
       font-size: 20px;
     }
 
-    /* 섹션 공통 */
+    
     section {
       padding: 120px 40px;
       max-width: 1400px;
@@ -333,7 +333,7 @@
       margin: 0 auto 80px;
     }
 
-    /* 뉴스 섹션 */
+    
     .news-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -411,7 +411,7 @@
       letter-spacing: 1px;
     }
 
-    /* 마법소녀 섹션 */
+  
     .guardians-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -512,7 +512,7 @@
       border-left: 2px solid var(--gold);
     }
 
-    /* 숨겨진 마법소녀 */
+  
     .hidden-guardians {
       display: none;
       margin-top: 50px;
@@ -575,7 +575,7 @@
       50% { opacity: 0.5; }
     }
 
-    /* 푸터 */
+  
     footer {
       background: var(--black-light);
       border-top: 1px solid rgba(184,134,11,0.2);
@@ -612,7 +612,7 @@
       letter-spacing: 2px;
     }
 
-    /* 관리자 모달 */
+  
     .admin-modal {
       display: none;
       position: fixed;
@@ -734,7 +734,7 @@
 
     .admin-error.show { display: block; }
 
-    /* 검색 결과 */
+  
     .search-results {
       display: none;
       position: fixed;
@@ -780,7 +780,7 @@
       font-size: 13px;
     }
 
-    /* F12 경고 */
+  
     .devtools-warning {
       display: none;
       position: fixed;
@@ -816,7 +816,7 @@
       letter-spacing: 4px;
     }
 
-    /* 로딩 화면 */
+  
     .loader {
       position: fixed;
       top: 0;
@@ -855,7 +855,7 @@
       color: var(--gold);
     }
 
-    /* 반응형 */
+  
     @media (max-width: 1200px) {
       .guardians-grid { grid-template-columns: repeat(3, 1fr); }
     }
@@ -876,7 +876,7 @@
   </style>
 </head>
 <body>
-  <!-- 로딩 화면 -->
+  
   <div class="loader" id="loader">
     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='60' text-anchor='middle' font-size='40' fill='%23b8860b'%3E👑%3C/text%3E%3C/svg%3E" class="loader-logo" alt="Loading">
     <div class="loader-text">LOADING...</div>
@@ -909,7 +909,7 @@
 567=S
 89=T</div>
 
-  <!-- 헤더 -->
+
   <header>
     <div class="header-inner">
       <div class="logo-link" onclick="goHome()">
@@ -931,10 +931,10 @@
     </div>
   </header>
 
-  <!-- 검색 결과 -->
+
   <div class="search-results" id="searchResults"></div>
 
-  <!-- 관리자 모달 -->
+  
   <div class="admin-modal" id="adminModal">
     <div class="admin-box">
       <h2>STAFF LOGIN</h2>
@@ -957,7 +957,7 @@
     </div>
   </div>
 
-  <!-- 히어로 -->
+  
   <section class="hero" id="home">
     <div class="hero-bg"></div>
     <div class="hero-content">
@@ -974,7 +974,7 @@
     </div>
   </section>
 
-  <!-- About -->
+  
   <section id="about">
     <h2 class="section-title">ABOUT EDEN</h2>
     <div class="section-subtitle">Our Mission & Vision</div>
@@ -991,7 +991,7 @@
     </div>
   </section>
 
-  <!-- News -->
+  
   <section id="news" style="background:var(--black-light);max-width:100%;padding-left:calc((100% - 1400px)/2 + 40px);padding-right:calc((100% - 1400px)/2 + 40px);">
     <h2 class="section-title">LATEST NEWS</h2>
     <div class="section-subtitle">What's Happening at EDEN</div>
@@ -1040,14 +1040,14 @@
     </div>
   </section>
 
-  <!-- Guardians -->
+  
   <section id="guardians">
     <h2 class="section-title">OUR GUARDIANS</h2>
     <div class="section-subtitle">The Protectors of Humanity</div>
     <div class="gold-line"></div>
     
     <div class="guardians-grid" id="guardiansGrid">
-      <!-- 정혜연 -->
+      
       <div class="guardian-card" data-name="정혜연" data-rank="S">
         <span class="guardian-rank">S</span>
         <div class="guardian-image">
@@ -1059,7 +1059,7 @@
         <div class="guardian-ability">트라우마 증폭</div>
       </div>
 
-      <!-- 이서연 -->
+      
       <div class="guardian-card" data-name="이서연" data-rank="S">
         <span class="guardian-rank">S</span>
         <div class="guardian-image">
@@ -1071,7 +1071,7 @@
         <div class="guardian-ability">마력 포격</div>
       </div>
 
-      <!-- 권채린 -->
+      
       <div class="guardian-card" data-name="권채린" data-rank="S">
         <span class="guardian-rank">S</span>
         <div class="guardian-image">
@@ -1083,7 +1083,7 @@
         <div class="guardian-ability">절대 방어</div>
       </div>
 
-      <!-- 하유정 -->
+      
       <div class="guardian-card" data-name="하유정" data-rank="A">
         <span class="guardian-rank">A</span>
         <div class="guardian-image">
@@ -1095,7 +1095,7 @@
         <div class="guardian-ability">금속 변형</div>
       </div>
 
-      <!-- 안시우 -->
+      
       <div class="guardian-card" data-name="안시우" data-rank="A">
         <span class="guardian-rank">A</span>
         <div class="guardian-image">
@@ -1108,12 +1108,12 @@
       </div>
     </div>
 
-    <!-- 숨겨진 마법소녀들 -->
+    
     <div class="hidden-guardians" id="hiddenGuardians">
       <h3 class="hidden-title">[ CLASSIFIED PERSONNEL ]</h3>
       <div class="guardians-grid" style="grid-template-columns:repeat(3,1fr);">
         
-        <!-- 숨겨진 1 -->
+        
         <div class="guardian-card" data-name="A" data-rank="재판관">
           <span class="guardian-rank" style="color:#ff0000;border-color:#ff0000;">?</span>
           <div class="guardian-image" style="background:#222;border-color:#ff0000;">
@@ -1125,7 +1125,7 @@
           <div class="guardian-ability encrypted-text">데이터 손상</div>
         </div>
 
-        <!-- 숨겨진 2 -->
+        
         <div class="guardian-card" data-name="R" data-rank="재판관">
           <span class="guardian-rank" style="color:#ff0000;border-color:#ff0000;">?</span>
           <div class="guardian-image" style="background:#222;border-color:#ff0000;">
@@ -1137,7 +1137,7 @@
           <div class="guardian-ability encrypted-text">데이터 손상</div>
         </div>
 
-        <!-- 숨겨진 3 -->
+      
         <div class="guardian-card" data-name="Z" data-rank="재판관">
           <span class="guardian-rank" style="color:#ff0000;border-color:#ff0000;">?</span>
           <div class="guardian-image" style="background:#222;border-color:#ff0000;">
@@ -1153,7 +1153,7 @@
     </div>
   </section>
 
-  <!-- Support -->
+  
   <section id="support" style="text-align:center;">
     <h2 class="section-title">SUPPORT</h2>
     <div class="section-subtitle">Join Us in Protecting the World</div>
@@ -1168,7 +1168,7 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  
   <footer>
     <img src="logo.png" class="footer-logo" alt="EDEN">
     <div class="footer-links">
@@ -1183,7 +1183,7 @@
   <script>
     const _0x4a2f = ['\x63\x61\x6e\x69\x72\x65\x73\x74', '\x77\x68\x65\x72\x65\x64\x72\x65\x61\x6d\x73\x72\x65\x73\x74'];
     
-    // F12 감지
+    
     let devtoolsOpen = false;
     const threshold = 160;
     
@@ -1206,10 +1206,10 @@
     
     setInterval(detectDevTools, 500);
     
-    // 우클릭 방지
+    
     document.addEventListener('contextmenu', e => e.preventDefault());
     
-    // 키보드 단축키 방지
+    
     document.addEventListener('keydown', e => {
       if (e.key === 'F12' || 
           (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
@@ -1222,7 +1222,7 @@
       }
     });
     
-    // 콘솔 경고
+    
     console.log('%c⚠️ 경고', 'font-size:40px;color:#ff0000;font-weight:bold;');
     console.log('%c이 콘솔은 에덴 보안팀에 의해 모니터링되고 있습니다.', 'font-size:14px;color:#b8860b;');
     console.log('%c무단 접근 시도는 기록되며 법적 조치가 취해질 수 있습니다.', 'font-size:12px;color:#888;');
@@ -1312,7 +1312,7 @@
       const id = document.getElementById('adminId').value.toLowerCase();
       const pw = document.getElementById('adminPw').value.toLowerCase();
       
-      // 난독화된 비교
+      
       if (id === _0x4a2f[0] && pw === _0x4a2f[1]) {
         adminMode = true;
         closeAdminModal();
