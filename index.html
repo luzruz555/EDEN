@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EDEN | Where Dreams Bloom</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #b8860b;
+      --gold-light: #d4a931;
+      --gold-dark: #8b6914;
+      --black: #0a0a0a;
+      --black-light: #1a1a1a;
+      --white: #f5f5f5;
+      --gray: #888;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    ::selection { background: var(--gold); color: var(--black); }
+
+    /* 숨겨진 힌트 */
+    .hidden-hint {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      color: #0a0a0a;
+      font-size: 8px;
+      font-family: monospace;
+      white-space: pre-line;
+      z-index: 1;
+      pointer-events: none;
+      user-select: text;
+      line-height: 1.3;
+    }
+
+    /* 헤더 */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: linear-gradient(180deg, rgba(10,10,10,0.98) 0%, rgba(10,10,10,0.9) 100%);
+      border-bottom: 1px solid rgba(184,134,11,0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-link {
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .logo-link:hover { transform: scale(1.05); }
+
+    .logo-img {
+      height: 50px;
+      filter: drop-shadow(0 0 10px rgba(184,134,11,0.3));
+    }
+
+    nav {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    nav a:hover { color: var(--gold); }
+    nav a:hover::after { width: 100%; }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(184,134,11,0.3);
+      border-radius: 25px;
+      padding: 8px 15px;
+      transition: all 0.3s;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--gold);
+      box-shadow: 0 0 15px rgba(184,134,11,0.2);
+    }
+
+    .search-box input {
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 13px;
+      width: 150px;
+      outline: none;
+    }
+
+    .search-box input::placeholder { color: var(--gray); }
+
+    .search-btn {
+      background: none;
+      border: none;
+      color: var(--gold);
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .admin-btn {
+      background: none;
+      border: 1px solid rgba(184,134,11,0.5);
+      color: var(--gold);
+      padding: 8px 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+    }
+
+    .admin-btn:hover {
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    /* 히어로 섹션 */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse at 50% 50%, rgba(184,134,11,0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 80%, rgba(184,134,11,0.05) 0%, transparent 40%),
+        radial-gradient(ellipse at 80% 20%, rgba(184,134,11,0.05) 0%, transparent 40%);
+      animation: heroGlow 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroGlow {
+      0% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      animation: fadeInUp 1.5s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-logo {
+      width: 300px;
+      margin-bottom: 30px;
+      filter: drop-shadow(0 0 30px rgba(184,134,11,0.4));
+      animation: logoFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .hero-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-style: italic;
+      color: var(--gold-light);
+      letter-spacing: 8px;
+      margin-bottom: 50px;
+      opacity: 0.9;
+    }
+
+    .hero-desc {
+      max-width: 600px;
+      font-size: 15px;
+      line-height: 2;
+      color: var(--gray);
+      margin-bottom: 40px;
+    }
+
+    .hero-btn {
+      display: inline-block;
+      padding: 15px 50px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--gold);
+      transition: left 0.4s;
+      z-index: -1;
+    }
+
+    .hero-btn:hover {
+      color: var(--black);
+    }
+
+    .hero-btn:hover::before {
+      left: 0;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    .scroll-indicator span {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--gray);
+      text-transform: uppercase;
+    }
+
+    .scroll-indicator::after {
+      content: '↓';
+      color: var(--gold);
+      font-size: 20px;
+    }
+
+    /* 섹션 공통 */
+    section {
+      padding: 120px 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 36px;
+      font-weight: 400;
+      letter-spacing: 8px;
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--gold);
+    }
+
+    .section-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-style: italic;
+      text-align: center;
+      color: var(--gray);
+      margin-bottom: 80px;
+      letter-spacing: 4px;
+    }
+
+    .gold-line {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 80px;
+    }
+
+    /* 뉴스 섹션 */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .news-card {
+      background: var(--black-light);
+      border: 1px solid rgba(184,134,11,0.2);
+      padding: 30px;
+      transition: all 0.4s;
+      cursor: pointer;
+    }
+
+    .news-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .news-card.featured {
+      grid-column: span 2;
+      grid-row: span 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background: linear-gradient(180deg, transparent 0%, rgba(10,10,10,0.9) 100%),
+                  linear-gradient(135deg, rgba(184,134,11,0.1) 0%, transparent 50%);
+    }
+
+    .news-tag {
+      display: inline-block;
+      padding: 5px 15px;
+      background: var(--gold);
+      color: var(--black);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    .news-title {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .news-card.featured .news-title {
+      font-size: 28px;
+    }
+
+    .news-excerpt {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .news-meta {
+      font-size: 11px;
+      color: var(--gray);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .news-code {
+      font-family: monospace;
+      font-size: 11px;
+      color: var(--gray);
+      margin-top: 15px;
+      padding: 8px 12px;
+      background: rgba(0,0,0,0.3);
+      border-left: 2px solid var(--gold);
+      letter-spacing: 1px;
+    }
+
+    /* 마법소녀 섹션 */
+    .guardians-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 25px;
+    }
+
+    .guardian-card {
+      background: var(--black-light);
+      border: 1px solid rgba(184,134,11,0.2);
+      text-align: center;
+      padding: 30px 20px;
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .guardian-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .guardian-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-10px);
+    }
+
+    .guardian-card:hover::before {
+      opacity: 1;
+    }
+
+    .guardian-rank {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      color: var(--gold);
+      padding: 3px 10px;
+      border: 1px solid var(--gold);
+    }
+
+    .guardian-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      border: 2px solid var(--gold);
+      overflow: hidden;
+    }
+
+    .guardian-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .guardian-name {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      margin-bottom: 5px;
+      letter-spacing: 2px;
+    }
+
+    .guardian-title {
+      font-size: 11px;
+      color: var(--gold);
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+
+    .guardian-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.6;
+      margin-bottom: 15px;
+      min-height: 50px;
+    }
+
+    .guardian-ability {
+      font-size: 11px;
+      color: var(--white);
+      padding: 8px 15px;
+      background: rgba(184,134,11,0.1);
+      border-left: 2px solid var(--gold);
+    }
+
+    /* 숨겨진 마법소녀 */
+    .hidden-guardians {
+      display: none;
+      margin-top: 50px;
+      padding-top: 50px;
+      border-top: 1px solid rgba(255,0,0,0.3);
+    }
+
+    .hidden-guardians.show {
+      display: block;
+      animation: glitchReveal 0.5s ease-out;
+    }
+
+    @keyframes glitchReveal {
+      0% { opacity: 0; transform: translateX(-10px); }
+      25% { transform: translateX(5px); }
+      50% { transform: translateX(-5px); }
+      75% { transform: translateX(2px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    .hidden-title {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      color: #ff0000;
+      text-align: center;
+      margin-bottom: 30px;
+      animation: glitchText 0.3s infinite;
+    }
+
+    @keyframes glitchText {
+      0% { text-shadow: 2px 0 #0ff, -2px 0 #f00; }
+      25% { text-shadow: -2px 0 #0ff, 2px 0 #f00; }
+      50% { text-shadow: 2px 0 #f00, -2px 0 #0ff; }
+      75% { text-shadow: -2px 0 #f00, 2px 0 #0ff; }
+      100% { text-shadow: 2px 0 #0ff, -2px 0 #f00; }
+    }
+
+    .hidden-guardians .guardian-card {
+      border-color: rgba(255,0,0,0.3);
+      animation: cardGlitch 2s infinite;
+    }
+
+    @keyframes cardGlitch {
+      0%, 90%, 100% { transform: translateY(-10px); filter: none; }
+      92% { transform: translateY(-10px) translateX(-3px); filter: hue-rotate(90deg); }
+      94% { transform: translateY(-10px) translateX(3px); filter: hue-rotate(-90deg); }
+      96% { transform: translateY(-10px) translateX(-2px); }
+      98% { transform: translateY(-10px) translateX(2px); }
+    }
+
+    .encrypted-text {
+      font-family: monospace;
+      color: #ff0000;
+      font-size: 12px;
+      animation: flicker 0.5s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* 푸터 */
+    footer {
+      background: var(--black-light);
+      border-top: 1px solid rgba(184,134,11,0.2);
+      padding: 60px 40px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      height: 40px;
+      margin-bottom: 30px;
+      opacity: 0.7;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+
+    .footer-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-copy {
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 2px;
+    }
+
+    /* 관리자 모달 */
+    .admin-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .admin-modal.show { display: flex; }
+
+    .admin-box {
+      background: var(--black-light);
+      border: 1px solid var(--gold);
+      padding: 50px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .admin-box h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      color: var(--gold);
+      margin-bottom: 10px;
+      letter-spacing: 4px;
+    }
+
+    .admin-box .subtitle {
+      font-size: 11px;
+      color: var(--gray);
+      margin-bottom: 30px;
+    }
+
+    .admin-input-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .admin-input-group label {
+      display: block;
+      font-size: 11px;
+      color: var(--gold);
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .admin-input-group .hint {
+      font-size: 10px;
+      color: #555;
+      margin-top: 5px;
+    }
+
+    .admin-input {
+      width: 100%;
+      padding: 15px;
+      background: var(--black);
+      border: 1px solid rgba(184,134,11,0.3);
+      color: var(--white);
+      font-size: 14px;
+      letter-spacing: 2px;
+      transition: border-color 0.3s;
+    }
+
+    .admin-input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .admin-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .admin-submit, .admin-cancel {
+      flex: 1;
+      padding: 15px;
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+    }
+
+    .admin-submit {
+      background: var(--gold);
+      border: 1px solid var(--gold);
+      color: var(--black);
+    }
+
+    .admin-submit:hover {
+      background: var(--gold-light);
+    }
+
+    .admin-cancel {
+      background: transparent;
+      border: 1px solid var(--gray);
+      color: var(--gray);
+    }
+
+    .admin-cancel:hover {
+      border-color: var(--white);
+      color: var(--white);
+    }
+
+    .admin-error {
+      color: #ff4444;
+      font-size: 12px;
+      margin-top: 15px;
+      display: none;
+    }
+
+    .admin-error.show { display: block; }
+
+    /* 검색 결과 */
+    .search-results {
+      display: none;
+      position: fixed;
+      top: 80px;
+      right: 40px;
+      background: var(--black-light);
+      border: 1px solid var(--gold);
+      padding: 20px;
+      min-width: 300px;
+      max-height: 400px;
+      overflow-y: auto;
+      z-index: 1500;
+    }
+
+    .search-results.show { display: block; }
+
+    .search-result-item {
+      padding: 15px;
+      border-bottom: 1px solid rgba(184,134,11,0.2);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .search-result-item:hover {
+      background: rgba(184,134,11,0.1);
+    }
+
+    .search-result-item:last-child { border-bottom: none; }
+
+    .search-result-name {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .search-result-rank {
+      font-size: 11px;
+      color: var(--gold);
+    }
+
+    .no-results {
+      color: var(--gray);
+      font-size: 13px;
+    }
+
+    /* F12 경고 */
+    .devtools-warning {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--black);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .devtools-warning.show { display: flex; }
+
+    .devtools-warning h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 48px;
+      color: var(--gold);
+      margin-bottom: 20px;
+      animation: warningPulse 1s infinite;
+    }
+
+    @keyframes warningPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .devtools-warning p {
+      color: var(--gray);
+      font-size: 16px;
+      letter-spacing: 4px;
+    }
+
+    /* 로딩 화면 */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--black);
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      transition: opacity 0.5s;
+    }
+
+    .loader.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader-logo {
+      width: 150px;
+      animation: loaderPulse 2s infinite;
+    }
+
+    @keyframes loaderPulse {
+      0%, 100% { opacity: 0.5; transform: scale(0.95); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+
+    .loader-text {
+      margin-top: 30px;
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      letter-spacing: 4px;
+      color: var(--gold);
+    }
+
+    /* 반응형 */
+    @media (max-width: 1200px) {
+      .guardians-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .header-inner { padding: 15px 20px; }
+      nav { gap: 20px; }
+      nav a { font-size: 11px; }
+      .search-box { display: none; }
+      .hero-logo { width: 200px; }
+      .hero-tagline { font-size: 18px; letter-spacing: 4px; }
+      section { padding: 80px 20px; }
+      .section-title { font-size: 24px; }
+      .news-grid { grid-template-columns: 1fr; }
+      .news-card.featured { grid-column: span 1; grid-row: span 1; }
+      .guardians-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <!-- 로딩 화면 -->
+  <div class="loader" id="loader">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='60' text-anchor='middle' font-size='40' fill='%23b8860b'%3E👑%3C/text%3E%3C/svg%3E" class="loader-logo" alt="Loading">
+    <div class="loader-text">LOADING...</div>
+  </div>
+
+  <div class="devtools-warning" id="devtoolsWarning">
+    <h1>👁️</h1>
+    <p>지켜보고 있습니다.</p>
+  </div>
+
+  <div class="hidden-hint">WOL FPROS TENGILS FOLOWLS
+5 19 22 9 16 7 14 21 2 1 10 6 8 4 17 3 18 20 13 11 12 15
+234=A
+760=B
+3.4=C
+568=C
+12=D
+8=E
+2.4=E
+12.3=E
+54=E
+1.8=H
+67=M
+45=R
+892=S
+127=R
+42=R
+492.4=Z
+89=W
+567=S
+89=T</div>
+
+  <!-- 헤더 -->
+  <header>
+    <div class="header-inner">
+      <div class="logo-link" onclick="goHome()">
+        <img src="logo.png" class="logo-img" alt="EDEN" onerror="this.outerHTML='<span style=\"font-family:Cinzel;font-size:24px;color:#b8860b;\">EDEN</span>'">
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#news">News</a>
+        <a href="#guardians">Guardians</a>
+        <a href="#support">Support</a>
+      </nav>
+      <div style="display:flex;gap:15px;align-items:center;">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Search..." onkeyup="handleSearch(event)">
+          <button class="search-btn" onclick="performSearch()">🔍</button>
+        </div>
+        <button class="admin-btn" onclick="openAdminModal()">Staff</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 검색 결과 -->
+  <div class="search-results" id="searchResults"></div>
+
+  <!-- 관리자 모달 -->
+  <div class="admin-modal" id="adminModal">
+    <div class="admin-box">
+      <h2>STAFF LOGIN</h2>
+      <div class="subtitle">Authorized Personnel Only</div>
+      <div class="admin-input-group">
+        <label>ID</label>
+        <input type="text" class="admin-input" id="adminId" placeholder="Enter ID">
+        <div class="hint">8자리 / 영문만</div>
+      </div>
+      <div class="admin-input-group">
+        <label>Password</label>
+        <input type="password" class="admin-input" id="adminPw" placeholder="Enter Password">
+        <div class="hint">15자리 / 영문만</div>
+      </div>
+      <div class="admin-error" id="adminError">인증 실패. 다시 시도하세요.</div>
+      <div class="admin-buttons">
+        <button class="admin-cancel" onclick="closeAdminModal()">Cancel</button>
+        <button class="admin-submit" onclick="attemptLogin()">Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 히어로 -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <img src="logo.png" class="hero-logo" alt="EDEN" onerror="this.outerHTML='<div style=\"font-family:Cinzel;font-size:72px;color:#b8860b;margin-bottom:30px;\">EDEN</div>'">
+      <div class="hero-tagline">Where Dreams Bloom</div>
+      <p class="hero-desc">
+        에덴은 인류의 평화와 안전을 위해 헌신하는 마법소녀들의 본부입니다.<br>
+        우리는 빛으로 어둠을 물리치고, 희망으로 세상을 지킵니다.
+      </p>
+      <a href="#guardians" class="hero-btn">Meet Our Guardians</a>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <h2 class="section-title">ABOUT EDEN</h2>
+    <div class="section-subtitle">Our Mission & Vision</div>
+    <div class="gold-line"></div>
+    <div style="max-width:800px;margin:0 auto;text-align:center;">
+      <p style="font-size:15px;line-height:2.2;color:var(--gray);margin-bottom:40px;">
+        에덴은 3012년 설립된 이래, 전 세계의 오염체로부터 인류를 보호하는 최전선에서 활동해왔습니다.
+        우리의 마법소녀들은 엄격한 선발 과정과 훈련을 거쳐, 최고의 능력을 갖춘 수호자로 성장합니다.
+      </p>
+      <p style="font-size:15px;line-height:2.2;color:var(--gray);">
+        "꿈이 피어나는 곳" — 에덴의 문은 언제나 열려 있습니다.<br>
+        당신의 빛이 세상을 밝힐 준비가 되셨다면, 우리와 함께하세요.
+      </p>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section id="news" style="background:var(--black-light);max-width:100%;padding-left:calc((100% - 1400px)/2 + 40px);padding-right:calc((100% - 1400px)/2 + 40px);">
+    <h2 class="section-title">LATEST NEWS</h2>
+    <div class="section-subtitle">What's Happening at EDEN</div>
+    <div class="gold-line"></div>
+    <div class="news-grid">
+      <div class="news-card featured" onclick="showNewsDetail('featured')">
+        <span class="news-tag">Breaking</span>
+        <h3 class="news-title">S급 마법소녀 정혜연, 강남 대규모 오염체 토벌 성공</h3>
+        <p class="news-excerpt">
+          지난 12일 새벽, 강남 일대에서 발생한 A급 오염체 집단을 S급 마법소녀 정혜연이 단독으로 토벌하는 데 성공했습니다. 
+          이번 작전으로 시민 피해는 전무했으며...
+        </p>
+        <div class="news-meta">
+          <span>2025.12.12</span>
+          <span>조회 12,847</span>
+        </div>
+        <div class="news-code">hwhuqdodufklyh.3.194024049112154067237057</div>
+      </div>
+      <div class="news-card" onclick="showNewsDetail('news1')">
+        <span class="news-tag">Notice</span>
+        <h3 class="news-title">2026년 신규 마법소녀 모집 안내</h3>
+        <p class="news-excerpt">에덴에서 새로운 빛을 찾습니다. 지원 자격 및 일정을 확인하세요.</p>
+        <div class="news-meta">
+          <span>2025.12.10</span>
+          <span>조회 8,234</span>
+        </div>
+      </div>
+      <div class="news-card" onclick="showNewsDetail('news2')">
+        <span class="news-tag">Event</span>
+        <h3 class="news-title">에덴 창립 113주년 기념 행사</h3>
+        <p class="news-excerpt">시민 여러분을 초대합니다. 마법소녀들과 함께하는 특별한 하루.</p>
+        <div class="news-meta">
+          <span>2025.12.08</span>
+          <span>조회 5,621</span>
+        </div>
+      </div>
+      <div class="news-card" onclick="showNewsDetail('news3')">
+        <span class="news-tag">Report</span>
+        <h3 class="news-title">11월 오염체 토벌 현황 보고서</h3>
+        <p class="news-excerpt">지난달 총 347건의 오염체가 성공적으로 처리되었습니다.</p>
+        <div class="news-meta">
+          <span>2025.12.05</span>
+          <span>조회 3,892</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guardians -->
+  <section id="guardians">
+    <h2 class="section-title">OUR GUARDIANS</h2>
+    <div class="section-subtitle">The Protectors of Humanity</div>
+    <div class="gold-line"></div>
+    
+    <div class="guardians-grid" id="guardiansGrid">
+      <!-- 정혜연 -->
+      <div class="guardian-card" data-name="정혜연" data-rank="S">
+        <span class="guardian-rank">S</span>
+        <div class="guardian-image">
+          <!-- 이미지 교체: src="이미지경로.jpg" -->
+          <span>✨</span>
+        </div>
+        <h3 class="guardian-name">정혜연</h3>
+        <div class="guardian-title">빛의 수호자</div>
+        <p class="guardian-quote">"여러분의 웃음이 저의 힘이에요."</p>
+        <div class="guardian-ability">광속 이동 / 정화의 빛</div>
+      </div>
+
+      <!-- 이서연 -->
+      <div class="guardian-card" data-name="이서연" data-rank="S">
+        <span class="guardian-rank">S</span>
+        <div class="guardian-image">
+          <span>🛡️</span>
+        </div>
+        <h3 class="guardian-name">이서연</h3>
+        <div class="guardian-title">철벽의 방패</div>
+        <p class="guardian-quote">"제가 있는 한, 아무도 다치지 않아요."</p>
+        <div class="guardian-ability">절대 방어 / 보호막 생성</div>
+      </div>
+
+      <!-- 권채린 -->
+      <div class="guardian-card" data-name="권채린" data-rank="S">
+        <span class="guardian-rank">S</span>
+        <div class="guardian-image">
+          <span>⚔️</span>
+        </div>
+        <h3 class="guardian-name">권채린</h3>
+        <div class="guardian-title">섬광의 검</div>
+        <p class="guardian-quote">"망설이지 않아. 그게 내 방식이야."</p>
+        <div class="guardian-ability">순간 베기 / 검기 방출</div>
+      </div>
+
+      <!-- 하유정 -->
+      <div class="guardian-card" data-name="하유정" data-rank="A">
+        <span class="guardian-rank">A</span>
+        <div class="guardian-image">
+          <span>💫</span>
+        </div>
+        <h3 class="guardian-name">하유정</h3>
+        <div class="guardian-title">별빛의 치유사</div>
+        <p class="guardian-quote">"상처는 제가 치유할게요."</p>
+        <div class="guardian-ability">회복 마법 / 정신 안정</div>
+      </div>
+
+      <!-- 안시우 -->
+      <div class="guardian-card" data-name="안시우" data-rank="A">
+        <span class="guardian-rank">A</span>
+        <div class="guardian-image">
+          <span>🔮</span>
+        </div>
+        <h3 class="guardian-name">안시우</h3>
+        <div class="guardian-title">예지의 눈</div>
+        <p class="guardian-quote">"미래는 바꿀 수 있어요."</p>
+        <div class="guardian-ability">미래 예지 / 위험 감지</div>
+      </div>
+    </div>
+
+    <!-- 숨겨진 마법소녀들 -->
+    <div class="hidden-guardians" id="hiddenGuardians">
+      <h3 class="hidden-title">[ CLASSIFIED PERSONNEL ]</h3>
+      <div class="guardians-grid" style="grid-template-columns:repeat(3,1fr);">
+        
+        <!-- 숨겨진 1 -->
+        <div class="guardian-card" data-name="???" data-rank="?">
+          <span class="guardian-rank" style="color:#ff0000;border-color:#ff0000;">?</span>
+          <div class="guardian-image" style="background:#222;border-color:#ff0000;">
+            <span style="filter:blur(2px);">👤</span>
+          </div>
+          <h3 class="guardian-name encrypted-text">[암호화됨]</h3>
+          <div class="guardian-title" style="color:#ff0000;">상태: 불명</div>
+          <p class="guardian-quote encrypted-text">"설명 - 나중에 수정"</p>
+          <div class="guardian-ability encrypted-text">데이터 손상</div>
+        </div>
+
+        <!-- 숨겨진 2 -->
+        <div class="guardian-card" data-name="???" data-rank="?">
+          <span class="guardian-rank" style="color:#ff0000;border-color:#ff0000;">?</span>
+          <div class="guardian-image" style="background:#222;border-color:#ff0000;">
+            <span style="filter:blur(2px);">👤</span>
+          </div>
+          <h3 class="guardian-name encrypted-text">[암호화됨]</h3>
+          <div class="guardian-title" style="color:#ff0000;">상태: 불명</div>
+          <p class="guardian-quote encrypted-text">"설명 - 나중에 수정"</p>
+          <div class="guardian-ability encrypted-text">데이터 손상</div>
+        </div>
+
+        <!-- 숨겨진 3 -->
+        <div class="guardian-card" data-name="???" data-rank="?">
+          <span class="guardian-rank" style="color:#ff0000;border-color:#ff0000;">?</span>
+          <div class="guardian-image" style="background:#222;border-color:#ff0000;">
+            <span style="filter:blur(2px);">👤</span>
+          </div>
+          <h3 class="guardian-name encrypted-text">[암호화됨]</h3>
+          <div class="guardian-title" style="color:#ff0000;">상태: 불명</div>
+          <p class="guardian-quote encrypted-text">"설명 - 나중에 수정"</p>
+          <div class="guardian-ability encrypted-text">데이터 손상</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Support -->
+  <section id="support" style="text-align:center;">
+    <h2 class="section-title">SUPPORT</h2>
+    <div class="section-subtitle">Join Us in Protecting the World</div>
+    <div class="gold-line"></div>
+    <p style="font-size:15px;line-height:2;color:var(--gray);max-width:600px;margin:0 auto 40px;">
+      에덴의 활동을 후원하거나, 마법소녀 지원에 관심이 있으신 분은<br>
+      아래 버튼을 통해 자세한 정보를 확인하세요.
+    </p>
+    <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+      <a href="#" class="hero-btn">지원하기</a>
+      <a href="#" class="hero-btn" style="background:transparent;">후원하기</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <img src="logo.png" class="footer-logo" alt="EDEN" onerror="this.outerHTML='<div style=\"font-family:Cinzel;font-size:20px;color:#b8860b;margin-bottom:30px;\">EDEN</div>'">
+    <div class="footer-links">
+      <a href="#">이용약관</a>
+      <a href="#">개인정보처리방침</a>
+      <a href="#">문의하기</a>
+      <a href="#">채용정보</a>
+    </div>
+    <p class="footer-copy">© 3125 EDEN. All Rights Reserved. Where Dreams Bloom.</p>
+  </footer>
+
+  <script>
+    const _0x4a2f = ['\x63\x61\x6e\x69\x72\x65\x73\x74', '\x77\x68\x65\x72\x65\x64\x72\x65\x61\x6d\x73\x72\x65\x73\x74'];
+    
+    // F12 감지
+    let devtoolsOpen = false;
+    const threshold = 160;
+    
+    const detectDevTools = () => {
+      const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+      const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+      
+      if (widthThreshold || heightThreshold) {
+        if (!devtoolsOpen) {
+          devtoolsOpen = true;
+          document.getElementById('devtoolsWarning').classList.add('show');
+        }
+      } else {
+        if (devtoolsOpen) {
+          devtoolsOpen = false;
+          document.getElementById('devtoolsWarning').classList.remove('show');
+        }
+      }
+    };
+    
+    setInterval(detectDevTools, 500);
+    
+    // 우클릭 방지
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    
+    // 키보드 단축키 방지
+    document.addEventListener('keydown', e => {
+      if (e.key === 'F12' || 
+          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+          (e.ctrlKey && e.key === 'u')) {
+        e.preventDefault();
+        document.getElementById('devtoolsWarning').classList.add('show');
+        setTimeout(() => {
+          document.getElementById('devtoolsWarning').classList.remove('show');
+        }, 3000);
+      }
+    });
+    
+    // 콘솔 경고
+    console.log('%c⚠️ 경고', 'font-size:40px;color:#ff0000;font-weight:bold;');
+    console.log('%c이 콘솔은 에덴 보안팀에 의해 모니터링되고 있습니다.', 'font-size:14px;color:#b8860b;');
+    console.log('%c무단 접근 시도는 기록되며 법적 조치가 취해질 수 있습니다.', 'font-size:12px;color:#888;');
+    
+    function goHome() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    const guardians = [
+      { name: '정혜연', rank: 'S', title: '빛의 수호자' },
+      { name: '이서연', rank: 'S', title: '철벽의 방패' },
+      { name: '권채린', rank: 'S', title: '섬광의 검' },
+      { name: '하유정', rank: 'A', title: '별빛의 치유사' },
+      { name: '안시우', rank: 'A', title: '예지의 눈' }
+    ];
+    
+    function handleSearch(e) {
+      if (e.key === 'Enter') performSearch();
+      else if (e.target.value.length > 0) performSearch();
+      else closeSearchResults();
+    }
+    
+    function performSearch() {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+      const resultsContainer = document.getElementById('searchResults');
+      
+      if (!query) {
+        closeSearchResults();
+        return;
+      }
+      
+      const results = guardians.filter(g => 
+        g.name.toLowerCase().includes(query) || 
+        g.title.toLowerCase().includes(query) ||
+        g.rank.toLowerCase() === query
+      );
+      
+      if (results.length > 0) {
+        resultsContainer.innerHTML = results.map(g => `
+          <div class="search-result-item" onclick="scrollToGuardian('${g.name}')">
+            <div class="search-result-name">${g.name}</div>
+            <div class="search-result-rank">${g.rank}급 · ${g.title}</div>
+          </div>
+        `).join('');
+      } else {
+        resultsContainer.innerHTML = '<div class="no-results">검색 결과가 없습니다.</div>';
+      }
+      
+      resultsContainer.classList.add('show');
+    }
+    
+    function scrollToGuardian(name) {
+      closeSearchResults();
+      const card = document.querySelector(`.guardian-card[data-name="${name}"]`);
+      if (card) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.style.boxShadow = '0 0 30px rgba(184,134,11,0.5)';
+        setTimeout(() => card.style.boxShadow = '', 2000);
+      }
+    }
+    
+    function closeSearchResults() {
+      document.getElementById('searchResults').classList.remove('show');
+    }
+    
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.search-box') && !e.target.closest('.search-results')) {
+        closeSearchResults();
+      }
+    });
+    
+    let adminMode = false;
+    
+    function openAdminModal() {
+      document.getElementById('adminModal').classList.add('show');
+      document.getElementById('adminId').focus();
+    }
+    
+    function closeAdminModal() {
+      document.getElementById('adminModal').classList.remove('show');
+      document.getElementById('adminId').value = '';
+      document.getElementById('adminPw').value = '';
+      document.getElementById('adminError').classList.remove('show');
+    }
+    
+    function attemptLogin() {
+      const id = document.getElementById('adminId').value.toLowerCase();
+      const pw = document.getElementById('adminPw').value.toLowerCase();
+      
+      // 난독화된 비교
+      if (id === _0x4a2f[0] && pw === _0x4a2f[1]) {
+        adminMode = true;
+        closeAdminModal();
+        activateAdminMode();
+      } else {
+        document.getElementById('adminError').classList.add('show');
+      }
+    }
+    
+    function activateAdminMode() {
+      document.getElementById('hiddenGuardians').classList.add('show');
+      document.getElementById('hiddenGuardians').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      console.clear();
+      console.log('%c[SYSTEM] 관리자 모드 활성화', 'color:#ff0000;font-size:16px;');
+      console.log('%c기밀 데이터에 접근 중...', 'color:#ff0000;');
+    }
+    
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeAdminModal();
+      if (e.key === 'Enter' && document.getElementById('adminModal').classList.contains('show')) {
+        attemptLogin();
+      }
+    });
+    
+    function showNewsDetail(id) {
+      alert('뉴스 상세 페이지는 준비 중입니다.');
+    }
+    
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hide');
+      }, 1500);
+    });
+    
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('.guardian-card, .news-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'all 0.6s ease-out';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
